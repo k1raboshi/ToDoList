@@ -16,23 +16,24 @@ namespace ToDoList.ViewModel
 	{
 		public ObservableCollection<ToDo> ToDos { get; set; }
 
-		public ICommand ShowWindowCommand { get; set; }
+		public string? Title { get; set; }
+
+		public ICommand AddToDoCommand { get; set; }
 
 		public MainViewModel() 
 		{
 			ToDos = ToDoManager.GetToDos();
-			ShowWindowCommand = new RelayCommand(ShowWindow, CanShowWindow);
+			AddToDoCommand = new RelayCommand(AddToDo, CanAddToDo);
 		}
 
-		public bool CanShowWindow(object obj) 
+		public bool CanAddToDo(object obj) 
 		{
 			return true;
 		}
 
-		public void ShowWindow(object obj)
+		public void AddToDo(object obj)
 		{
-			AddToDo addToDoWin = new AddToDo();
-			addToDoWin.Show();
+			ToDoManager.AddToDo(new ToDo() { Title = Title});
 		}
 	}
 }

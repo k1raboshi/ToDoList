@@ -6,19 +6,44 @@
         xmlns:local="clr-namespace:ToDoList"
         mc:Ignorable="d"
         Title="ToDo List" Height="450" Width="800">
+    
     <Grid>
         <Grid Background="White" Grid.Row="1" Margin="25,40,25,15" >
-            <!--<TextBox Name="FilterTextBox" TextChanged="FilterTextBox_TextChanged" Height="30" Width="200" Margin="25" VerticalAlignment="Top"  HorizontalAlignment="left" BorderThickness="1" BorderBrush="#E0E0E0" />
-            --><Button Height="30" Command="{Binding ShowWindowCommand}"  Content="Add to do" Width="100" VerticalContentAlignment="Center" Padding="5" Margin="25" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="#E0E0E0"  />
-            <ListView Name="UserList" ItemsSource="{Binding ToDos}" BorderBrush="#cdcdcd" Margin="25,70,25,25" Padding="0">
+            <TextBox Name="ToDoTitle" Text="{Binding Title}" Height="30" Width="400" Margin="25,25,0,0" VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#E0E0E0" />
+            <Button Height="30" Command="{Binding AddToDoCommand}"  Content="Add to do" Width="100" VerticalContentAlignment="Center" Padding="5" Margin="25" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="#E0E0E0"  />
+            <ListView Name="ToDoList" ItemsSource="{Binding ToDos}" BorderBrush="#cdcdcd" Margin="25,70,25,25" Padding="0">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Title}" Header="Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Text}" Header="Time"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Completion"/>
+
+                        <GridViewColumn Header="Completion">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Margin="0" Name="CBox" VerticalAlignment="Center" IsChecked="{Binding Completed}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Title">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Completed}" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Time"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
     </Grid>
+    
 </Window>

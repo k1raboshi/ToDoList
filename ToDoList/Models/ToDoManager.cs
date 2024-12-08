@@ -15,5 +15,10 @@ namespace ToDoList.Models
 		{
 			return _databaseToDos;
 		}
+
+		public static void AddToDo(ToDo toDo)
+		{
+			_databaseToDos.Add(toDo);
+		}
 	}
 }
