@@ -8,13 +8,24 @@ namespace ToDoList.Models
 {
 	public class ToDo
 	{
-		public bool Completed { get; set; }
+		private bool _completed;
+		public bool Completed { 
+			get => _completed;
+			set
+			{
+				if (value != _completed)
+				{
+					_completed = value;
+					ToDoManager.SaveToDo();
+				} 
+			}
+		}
 		public string? Title { get; set; }
 		public DateTime? Date { get; set; }
 		
 		public ToDo() 
 		{
-			Completed = false;
+			//Completed = false;
 			Date = DateTime.Now;
 		}
 	}

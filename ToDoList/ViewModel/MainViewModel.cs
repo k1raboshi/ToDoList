@@ -19,11 +19,12 @@ namespace ToDoList.ViewModel
 		public string? Title { get; set; }
 
 		public ICommand AddToDoCommand { get; set; }
-
+		public ICommand RemoveToDoCommand { get; set; }
 		public MainViewModel() 
 		{
 			ToDos = ToDoManager.GetToDos();
 			AddToDoCommand = new RelayCommand(AddToDo, CanAddToDo);
+			RemoveToDoCommand = new RelayCommand(RemoveToDo, CanRemoveToDo);
 		}
 
 		public bool CanAddToDo(object obj) 
@@ -34,6 +35,20 @@ namespace ToDoList.ViewModel
 		public void AddToDo(object obj)
 		{
 			ToDoManager.AddToDo(new ToDo() { Title = Title});
+		}
+
+		public bool CanRemoveToDo(object obj)
+		{
+			return obj is ToDo;
+		}
+
+		public void RemoveToDo(object obj)
+		{
+			var toDo = obj as ToDo;
+			if (toDo != null)
+			{
+				ToDoManager.RemoveToDo(toDo);
+			}
 		}
 	}
 }

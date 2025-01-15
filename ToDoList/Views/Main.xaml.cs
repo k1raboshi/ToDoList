@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToDoList.Models;
 using ToDoList.ViewModel;
 
 
@@ -18,11 +19,17 @@ namespace ToDoList.Views
 	/// </summary>
 	public partial class Main : Window
 	{
+		
 		public Main()
 		{
 			InitializeComponent();
 			MainViewModel mainViewModel = new MainViewModel();
 			this.DataContext = mainViewModel;
+		}
+
+		private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+		{
+			ToDoManager.SaveToDo();
 		}
 	}
 }

@@ -8,38 +8,47 @@
         Title="ToDo List" Height="450" Width="800">
     
     <Grid>
+        
         <Grid Background="White" Grid.Row="1" Margin="25,40,25,15" >
             <TextBox Name="ToDoTitle" Text="{Binding Title}" Height="30" Width="400" Margin="25,25,0,0" VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#E0E0E0" />
             <Button Height="30" Command="{Binding AddToDoCommand}"  Content="Add to do" Width="100" VerticalContentAlignment="Center" Padding="5" Margin="25" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="#E0E0E0"  />
             <ListView Name="ToDoList" ItemsSource="{Binding ToDos}" BorderBrush="#cdcdcd" Margin="25,70,25,25" Padding="0">
                 <ListView.View>
                     <GridView>
-
-                        <GridViewColumn Header="Completion">
+                        <GridViewColumn Header="Completion" Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Margin="0" Name="CBox" VerticalAlignment="Center" IsChecked="{Binding Completed}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Title">
+                        <GridViewColumn Header="Title" Width="360">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Title}">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
+                                    <TextBox Text="{Binding Title, Mode=TwoWay}" BorderThickness="0" Background="Transparent" MinWidth="350" LostKeyboardFocus="TextBox_LostKeyboardFocus">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Path=Completed}" Value="True">
                                                         <Setter Property="TextDecorations" Value="Strikethrough"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                        </TextBox.Style>
+                                    </TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Time"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Time" Width="70"/>
+                        <GridViewColumn Header="Actions" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Content="Delete" Width="60" Margin="40,0,0,0" Command="{Binding DataContext.RemoveToDoCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
